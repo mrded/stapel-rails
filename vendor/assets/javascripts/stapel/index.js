@@ -1,2 +1,3 @@
+//= require_tree .
+
 console.log('hello');
-alert('hello')

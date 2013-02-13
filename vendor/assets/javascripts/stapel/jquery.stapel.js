@@ -4,12 +4,12 @@
  *
  * Licensed under the MIT license.
  * http://www.opensource.org/licenses/mit-license.php
- * 
+ *
  * Copyright 2012, Codrops
  * http://www.codrops.com
  */
 ;( function( $, window, undefined ) {
-	
+
 	'use strict';
 
 	/*
@@ -180,28 +180,28 @@
 		Modernizr = window.Modernizr;
 
 	$.Stapel = function( options, element ) {
-		
+
 		this.el = $( element );
 		this._init( options );
-		
+
 	};
 
 	// the options
 	$.Stapel.defaults = {
 		// space between the items
 		gutter : 40,
-		// the rotations degree for the 2nd and 3rd item 
+		// the rotations degree for the 2nd and 3rd item
 		// (to give a more realistic pile effect)
 		pileAngles : 2,
 		// animation settings for the clicked pile's items
-		pileAnimation : { 
+		pileAnimation : {
 			openSpeed : 400,
 			openEasing : 'ease-in-out', // try this :) 'cubic-bezier(.47,1.34,.9,1.03)',
 			closeSpeed : 400,
 			closeEasing : 'ease-in-out'
 		},
 		// animation settings for the other piles
-		otherPileAnimation : { 
+		otherPileAnimation : {
 			openSpeed : 400,
 			openEasing : 'ease-in-out',
 			closeSpeed : 350,
@@ -221,13 +221,13 @@
 	$.Stapel.prototype = {
 
 		_init : function( options ) {
-			
+
 			// options
 			this.options = $.extend( true, {}, $.Stapel.defaults, options );
 
 			// cache some elements
 			this._config();
-			
+
 			// preload images
 			var self = this;
 			this.el.imagesLoaded( function() {
@@ -262,7 +262,7 @@
 
 			// the li's
 			this.items = this.el.children( 'li' ).hide();
-			
+
 			// close pile
 			this.close = $( '#tp-close' );
 
@@ -277,7 +277,7 @@
 			var self = this;
 			$window.on( 'debouncedresize.stapel', function() { self._resize(); } );
 			this.items.on( 'click.stapel', function() {
-				
+
 				var $item = $( this );
 
 				if( !self.spread && $item.data( 'isPile' ) ) {
@@ -286,7 +286,7 @@
 					self.pileName = $item.data( 'pileName' );
 					self.options.onBeforeOpen( self.pileName );
 					self._openPile();
-					
+
 					return false;
 
 				}
@@ -300,9 +300,9 @@
 			piles() : save the items info in a object with the following structure:
 
 			this.piles = {
-				
+
 				pileName : {
-					
+
 					// elements of this pile (note that an element can be also in a different pile)
 					// for each element, the finalPosition is the position of the element when the pile is opened
 					elements : [
@@ -341,7 +341,7 @@
 			// calculate and set each Pile's elements position based on the current ul width
 			// this function will also be called on window resize
 			this._setItemsPosition();
-			
+
 			// new items
 			this.items = this.el.children( 'li' ).show();
 			// total items
@@ -353,13 +353,13 @@
 			this.piles = {};
 			var pile, self = this, idx = 0;
 			this.items.each( function() {
-					
+
 				var $item = $( this ),
 					itemPile = $item.attr( 'data-pile' ) || 'nopile-' + $item.index(),
 					attr = itemPile.split( ',' );
 
 				for( var i = 0, total = attr.length; i < total; ++i ) {
-					
+
 					var pileName = $.trim( attr[i] );
 					pile = self.piles[ pileName ];
 
@@ -372,15 +372,15 @@
 						};
 
 						++idx;
-				
+
 					}
-					
+
 					var clone = $item.clone().get(0);
 					pile.elements.push( { el : clone, finalPosition : { left : 0, top : 0 } } );
 					$( clone ).appendTo( self.el );
-				
+
 				}
-			
+
 			} );
 
 		},
@@ -396,7 +396,7 @@
 						styleCSS = { transform : 'rotate(0deg)' };
 
 					this._applyInitialTransition( $el );
-						
+
 					if( i === len - 2 ) {
 						styleCSS = { transform : 'rotate(' + this.options.pileAngles + 'deg)' };
 					}
@@ -428,12 +428,12 @@
 
 			if( this.support ) {
 				$el.css( 'transition', 'left 400ms ease-in-out, top 400ms ease-in-out' );
-			}	
+			}
 
 		},
 		_setItemsPosition : function() {
 
-			var accumL = 0, accumT = 0, 
+			var accumL = 0, accumT = 0,
 				l, t, ml = 0,
 				lastItemTop = 0;
 
@@ -494,7 +494,7 @@
 					var $el = $( elem.el );
 
 					if( pile !== this.pileName ) {
-						
+
 						$el.css( { left : p.position.left, top : p.position.top } );
 
 					}
@@ -529,7 +529,7 @@
 			for( var pile in this.piles ) {
 
 				var p = this.piles[ pile ], cnt = 0;
-				
+
 				for( var i = 0, len = p.elements.length; i < len; ++i ) {
 
 					var elem = p.elements[i],
@@ -553,7 +553,7 @@
 						if( i < len - 1  ) {
 							$img.css( 'visibility', 'visible' );
 						}
-						
+
 						fs = elem.finalPosition;
 						fs.transform = this.options.randomAngle && i !== p.index ? 'rotate(' + Math.floor( Math.random() * ( 5 + 5 + 1 ) - 5 ) + 'deg)' : 'none';
 
@@ -593,7 +593,7 @@
 							}
 
 							++cnt;
-							
+
 							if( cnt === $el.data( 'pileCount' ) ) {
 
 								$( document ).one( 'mousemove.stapel', function() {
@@ -610,7 +610,7 @@
 
 			}
 
-			this.el.css( 'height', fs.top + this.itemSize.height );	
+			this.el.css( 'height', fs.top + this.itemSize.height );
 
 		},
 		_closePile : function() {
@@ -631,7 +631,7 @@
 				for( var pile in this.piles ) {
 
 					var p = this.piles[ pile ], cnt = 0;
-					
+
 					for( var i = 0, len = p.elements.length; i < len; ++i ) {
 
 						var $item = $( p.elements[i].el ),
@@ -642,7 +642,7 @@
 							};
 
 						$item.css( styleCSS );
-						
+
 						fs = p.position;
 
 						if( pile === this.pileName ) {
@@ -721,7 +721,7 @@
 				this.el.css( 'height', fs.top + this.itemSize.height );
 
 			}
-			
+
 			return false;
 
 		},
@@ -755,68 +755,68 @@
 		}
 
 	};
-	
+
 	var logError = function( message ) {
 
 		if ( window.console ) {
 
 			window.console.error( message );
-		
+
 		}
 
 	};
-	
+
 	$.fn.stapel = function( options ) {
 
 		var instance = $.data( this, 'stapel' );
-		
+
 		if ( typeof options === 'string' ) {
-			
+
 			var args = Array.prototype.slice.call( arguments, 1 );
-			
+
 			this.each(function() {
-			
+
 				if ( !instance ) {
 
 					logError( "cannot call methods on stapel prior to initialization; " +
 					"attempted to call method '" + options + "'" );
 					return;
-				
+
 				}
-				
+
 				if ( !$.isFunction( instance[options] ) || options.charAt(0) === "_" ) {
 
 					logError( "no such method '" + options + "' for stapel instance" );
 					return;
-				
+
 				}
-				
+
 				instance[ options ].apply( instance, args );
-			
+
 			});
-		
-		} 
+
+		}
 		else {
-		
+
 			this.each(function() {
-				
+
 				if ( instance ) {
 
 					instance._init();
-				
+
 				}
 				else {
 
 					instance = $.data( this, 'stapel', new $.Stapel( options, this ) );
-				
+
 				}
 
 			});
-		
+
 		}
-		
+
 		return instance;
-		
+
 	};
-	
+
 } )( jQuery, window );
