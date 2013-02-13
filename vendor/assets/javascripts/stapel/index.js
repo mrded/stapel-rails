@@ -1,3 +1,26 @@
-//= require_tree .
+//= require stapel/modernizr.custom.63321
+//= require stapel/jquery.stapel
 
-console.log('hello');
+$(document).ready(function() {
+  var $grid = $( '#tp-grid' ),
+    $name = $( '#name' ),
+    $close = $( '#close' ),
+    $loader = $( '<div class="loader"><i></i><i></i><i></i><i></i><i></i><i></i><span>Loading...</span></div>' ).insertBefore( $grid ),
+    stapel = $grid.stapel( {
+      onLoad : function() {
+        $loader.remove();
+      },
+      onBeforeOpen : function( pileName ) {
+        $name.html( pileName );
+      },
+      onAfterOpen : function( pileName ) {
+        $close.show();
+      }
+    } );
+
+  $close.on( 'click', function() {
+    $close.hide();
+    $name.empty();
+    stapel.closePile();
+  } );
+});
