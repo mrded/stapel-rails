@@ -1,12 +1,12 @@
 # -*- encoding: utf-8 -*-
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'stapel-rails/version'
+require 'stapel/rails/version'
 
 Gem::Specification.new do |gem|
   gem.name          = "stapel-rails"
   gem.version       = Stapel::Rails::VERSION
-  gem.authors       = ["mrded"]
+  gem.authors       = ["Dmitry Demenchuk"]
   gem.email         = ["dmitry@demenchuk.me"]
   gem.description   = 'An experimental jQuery plugin that will group thumbnails by a shared data-attribute into a pile. When clicking on the pile, the thumbnails that belong to that pile will be spread into a grid using CSS transitions.'
   gem.summary       = 'Plugin will group thumbnails by a shared data-attribute into a pile'
