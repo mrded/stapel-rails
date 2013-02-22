@@ -4,15 +4,16 @@ module Stapel
   end
 
   class Items < AbstractController::Base
-    attr_accessor :items, :options
+    attr_accessor :items, :options, :id
 
     include AbstractController::Rendering
     include AbstractController::Helpers
     self.view_paths << "app/views"
 
-    def initialize(options = [])
+    def initialize(options = {})
       @options = options
       @items = []
+      @id = rand(36**8).to_s(36)
     end
 
     def add(item)
