@@ -28,4 +28,5 @@ How to use:
 
     stapel.add item
 
-    stapel.show
+    stapel.prepare
+    stapel.html
