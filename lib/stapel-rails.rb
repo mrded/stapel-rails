@@ -21,11 +21,11 @@ module Stapel
     end
 
     def prepare
-      # info: this is a technique for generating
-      # a document with multiple root nodes with Nokogiri
       @html = Nokogiri::HTML::DocumentFragment.parse ""
       Nokogiri::HTML::Builder.with(@html) do | doc |
         doc.div(class: "stapel") {
+          # Set options for JavaScript
+          doc.div class: 'stapel-options', 'data-options' => @options.to_json
 
           doc.div(class: "topbar") {
             doc.span 'X', id: 'close', class: "back"
